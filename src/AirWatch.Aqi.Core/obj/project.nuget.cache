@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "/NSY/eE8URs=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Usuário\\Desktop\\Treinamento\\AirWatch\\src\\AirWatch.Aqi.Core\\AirWatch.Aqi.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Usuário\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.13\\microsoft.extensions.dependencyinjection.10.0.13.nupkg.sha512",
+    "C:\\Users\\Usuário\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.13\\microsoft.extensions.dependencyinjection.abstractions.10.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}

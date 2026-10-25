@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AirWatch.Aqi.Contracts/AirWatch.Aqi.Contracts.csproj" />
+    <Project Path="src/AirWatch.Aqi.Core/AirWatch.Aqi.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AirWatch.Aqi.UnitTests/AirWatch.Aqi.UnitTests.csproj" />
+  </Folder>
+</Solution>
