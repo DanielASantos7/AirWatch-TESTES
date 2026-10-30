@@ -101,6 +101,8 @@ public class AirQualityIndexTests
 
         Assert.Equal(rotuloEsperado, resultadoObtido);
     }
+
+
     public static IEnumerable<object[]> ObterCenariosInvalidosOverallAqi()
     {
         yield return new object[] { null, -1 };
@@ -132,6 +134,9 @@ public class AirQualityIndexTests
         int resultadoObtido = _sut.OverallAqi(readings);
         Assert.Equal(resultadoEsperado, resultadoObtido);
     }
+
+
+
     public static IEnumerable<object[]> ObterCenariosValidosEMistosOverallAqi()
     {
         yield return new object[] { new List<Reading> { new Reading(Pollutant.Pm25, 9.04) }, 38 };
@@ -164,6 +169,10 @@ public class AirQualityIndexTests
         int resultadoObtido = _sut.OverallAqi(readings);
         Assert.Equal(resultadoEsperado, resultadoObtido);
     }
+
+
+
+
     public static IEnumerable<object[]> ObterCenariosInvalidosEmDominantPollutant()
     {
         yield return new object[] { null, (Pollutant?)null };
@@ -194,6 +203,8 @@ public class AirQualityIndexTests
         Pollutant? pollutantObtido = _sut.DominantPollutant(readings);
         Assert.Equal(pollutantEsperado, pollutantObtido);
     }
+
+
     public static IEnumerable<object[]> ObterCenariosValidosEMistosEmDominantPollutant()
     {
         // CASO A: TESTANDO SE DEVOLVE CORRETAMENTE
