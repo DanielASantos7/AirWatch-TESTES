@@ -78,4 +78,27 @@ public class AirQualityIndexTests
     }
 
 
+    [Theory]
+    [InlineData(-1, "desconhecido")]
+    [InlineData(0, "Bom")]
+    [InlineData(25, "Bom")]
+    [InlineData(50, "Bom")]
+    [InlineData(55, "Moderado")]
+    [InlineData(100, "Moderado")]
+    [InlineData(125, "USG")]
+    [InlineData(150, "USG")]
+    [InlineData(175, "Insalubre")]
+    [InlineData(200, "Insalubre")]
+    [InlineData(250, "Muito Insalubre")]
+    [InlineData(300, "Muito Insalubre")]
+    [InlineData(301, "Perigoso")]
+    public void Category_DeveRetornarRotulodeAQI_QuandoValorEstiverEmFaixaDeterminada(
+        int aqi,
+        string rotuloEsperado
+        )
+    {
+        string resultadoObtido = _sut.Category(aqi);
+
+        Assert.Equal(rotuloEsperado, resultadoObtido);
+    }
 }
