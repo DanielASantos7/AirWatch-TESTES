@@ -101,4 +101,35 @@ public class AirQualityIndexTests
 
         Assert.Equal(rotuloEsperado, resultadoObtido);
     }
+    public static IEnumerable<object[]> ObterCenariosInvalidosOverallAqi()
+    {
+        yield return new object[] { null, -1 };
+
+        yield return new object[] { new List<Reading>(), -1 };
+
+        yield return new object[] { new List<Reading>
+            {
+                new Reading(Pollutant.Pm10, -1),
+                new Reading(Pollutant.Pm10, 605),
+
+
+                new Reading(Pollutant.Pm25, -1),
+                new Reading(Pollutant.Pm25, 500.5),
+
+                new Reading(Pollutant.O3, -1),
+                new Reading(Pollutant.O3, 201)
+            },
+                -1 };
+    }
+
+    [Theory]
+    [MemberData(nameof(ObterCenariosInvalidosOverallAqi))]
+    public void OverallAqi_DeveRetornarMenosUm_QuandoReadingsForNuloOuVaziouOuQuandoNenhumaLeituraForValida(
+        IReadOnlyList<Reading> readings,
+        int resultadoEsperado
+        )
+    {
+        int resultadoObtido = _sut.OverallAqi(readings);
+        Assert.Equal(resultadoEsperado, resultadoObtido);
+    }
 }
