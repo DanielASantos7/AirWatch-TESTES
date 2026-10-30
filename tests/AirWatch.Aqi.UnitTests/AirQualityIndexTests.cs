@@ -194,4 +194,87 @@ public class AirQualityIndexTests
         Pollutant? pollutantObtido = _sut.DominantPollutant(readings);
         Assert.Equal(pollutantEsperado, pollutantObtido);
     }
+    public static IEnumerable<object[]> ObterCenariosValidosEMistosEmDominantPollutant()
+    {
+        // CASO A: TESTANDO SE DEVOLVE CORRETAMENTE
+        yield return new object[] { new List<Reading> { new Reading(Pollutant.Pm25, 9.04) }, (Pollutant?)Pollutant.Pm25 };
+        yield return new object[] { new List<Reading> { new Reading(Pollutant.Pm10, 54) }, (Pollutant?)Pollutant.Pm10 };
+        yield return new object[] { new List<Reading> { new Reading(Pollutant.O3, 54) }, (Pollutant?)Pollutant.O3 };
+
+        // CASO B: TESTANTO SE DEVOLVE NA ORDEM CERTA (PM25 -> 50 PM10 E O3 -> 49
+        yield return new object[] { new List<Reading>
+        {
+            new Reading(Pollutant.Pm25, 12.0),
+            new Reading(Pollutant.Pm10, 53.99),
+            new Reading(Pollutant.O3, 53.99)
+        },
+            (Pollutant?)Pollutant.Pm25};
+
+        // CASO C: TESTANDO SE COM OS MESMO VALORES ELE ORDENA COMO A PROVA PEDE
+        yield return new object[] { new List<Reading>
+        {
+            new Reading(Pollutant.Pm10, 424),
+            new Reading(Pollutant.O3, 200),
+            new Reading(Pollutant.Pm25, 250.4),
+        },
+            (Pollutant?)Pollutant.Pm25};
+
+
+        // CASO D: TESTANDO COM VALORES MISTOS, VALIDOS E INVALIDOS
+        yield return new object[] { new List<Reading>
+        {
+            new Reading(Pollutant.Pm25, -1),
+            new Reading(Pollutant.Pm10, -1),
+            new Reading(Pollutant.Pm10, 0),
+            new Reading(Pollutant.O3, 200)
+        },
+            (Pollutant?)Pollutant.O3};
+
+        // CASO E: O O3 FICA NA FRENTE AGORA
+        yield return new object[] { new List<Reading>
+        {
+            new Reading(Pollutant.Pm25, 12.0),
+            new Reading(Pollutant.Pm10, 12),
+            new Reading(Pollutant.O3, 70)
+        },
+            (Pollutant?)Pollutant.O3};
+
+        // CASO F: O PM10 FICA NA FRENTE AGORA
+        yield return new object[] { new List<Reading>
+        {
+            new Reading(Pollutant.Pm25, 12.0),
+            new Reading(Pollutant.Pm10, 604),
+            new Reading(Pollutant.O3, 54)
+        },
+            (Pollutant?)Pollutant.Pm10};
+
+        // CASO G: testando ordenação com 0
+        yield return new object[] { new List<Reading>
+        {
+            new Reading(Pollutant.Pm10, 0),
+            new Reading(Pollutant.Pm25, 0),
+            new Reading(Pollutant.O3, 0)
+        },
+            (Pollutant?)Pollutant.Pm25};
+
+        // CASO H: TESTANDO ORDENAÇÃO DO MESMO VALOR E MESMO POLUENTE
+        yield return new object[] { new List<Reading>
+        {
+            new Reading(Pollutant.O3, 54),
+            new Reading(Pollutant.Pm10, 54),
+            new Reading(Pollutant.Pm10, 54),
+        },
+            (Pollutant?)Pollutant.Pm10};
+    }
+
+    [Theory]
+    [MemberData(nameof(ObterCenariosValidosEMistosEmDominantPollutant))]
+    public void DominantPollutant_DeveRetornarPollutantDominante_CasoAlgumaEntradaValida(
+        IReadOnlyList<Reading> readings,
+        Pollutant? pollutantEsperado
+        )
+    {
+        Pollutant? pollutantObtido = _sut.DominantPollutant(readings);
+        Assert.Equal(pollutantEsperado, pollutantObtido);
+    }
 }
