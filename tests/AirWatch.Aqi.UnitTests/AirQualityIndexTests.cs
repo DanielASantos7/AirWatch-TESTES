@@ -164,4 +164,34 @@ public class AirQualityIndexTests
         int resultadoObtido = _sut.OverallAqi(readings);
         Assert.Equal(resultadoEsperado, resultadoObtido);
     }
+    public static IEnumerable<object[]> ObterCenariosInvalidosEmDominantPollutant()
+    {
+        yield return new object[] { null, (Pollutant?)null };
+
+        yield return new object[] { new List<Reading>(), (Pollutant?)null };
+
+        yield return new object[] { new List<Reading>
+            {
+                new Reading(Pollutant.Pm10, -1),
+                new Reading(Pollutant.Pm10, 605),
+
+
+                new Reading(Pollutant.Pm25, -1),
+                new Reading(Pollutant.Pm25, 500.5),
+
+                new Reading(Pollutant.O3, -1),
+                new Reading(Pollutant.O3, 201)
+            },
+                (Pollutant?)null};
+    }
+    [Theory]
+    [MemberData(nameof(ObterCenariosInvalidosEmDominantPollutant))]
+    public void DominantPollutant_DeveRetornarNull_QuandoLeiturasForemInvalidas(
+         IReadOnlyList<Reading> readings,
+         Pollutant? pollutantEsperado
+        )
+    {
+        Pollutant? pollutantObtido = _sut.DominantPollutant(readings);
+        Assert.Equal(pollutantEsperado, pollutantObtido);
+    }
 }
